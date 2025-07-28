@@ -19,6 +19,11 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('public/backend/plugins/bootstrap/css/bootstrap.min.css') }}">
     <link href="{{ asset('public/auth/css/app.css?v=1.1') }}" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    @yield('css')
 </head>
 <body>
     <div id="app">

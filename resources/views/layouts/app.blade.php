@@ -22,6 +22,9 @@
 		<link rel="stylesheet" href="{{ asset('public/backend/assets/css/themify-icons.css') }}">
 		<link rel="stylesheet" href="{{ asset('public/backend/plugins/metisMenu/metisMenu.css') }}">
 
+		<!-- Tailwind CSS -->
+		<script src="https://cdn.tailwindcss.com"></script>
+
 		@if(isset(request()->activeBusiness->id))
 			@if(get_business_option('backend_direction') == "rtl")
 			<link rel="stylesheet" href="{{ asset('public/backend/plugins/bootstrap/css/bootstrap-rtl.min.css') }}">

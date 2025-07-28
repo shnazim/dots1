@@ -9,6 +9,7 @@
 			 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#currency_settings"><i class="fas fa-pound-sign"></i><span>{{ _lang('Currency Settings') }}</span></a></li>
 			 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#email"><i class="far fa-envelope"></i><span>{{ _lang('Email Settings') }}</span></a></li>
 			 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#recaptcha"><i class="far fa-check-circle"></i><span>{{ _lang('Google Recaptcha V3') }}</span></a></li>
+			 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#social_login"><i class="fab fa-google"></i><span>{{ _lang('Social Login') }}</span></a></li>
 			 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#cron_jobs"><i class="far fa-clock"></i><span>{{ _lang('Cron Jobs') }}</span></a></li>
 			 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#logo"><i class="fas fa-tint"></i><span>{{ _lang('Logo and Favicon') }}</span></a></li>
 			 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#cache"><i class="fas fa-server"></i><span>{{ _lang('Cache Control') }}</span></a></li>
@@ -439,6 +440,62 @@
 										<label class="col-xl-4 col-form-label">{{ _lang('RECAPTCHA SECRET KEY') }}</label>
 										<div class="col-xl-8">
 											<input type="text" class="form-control" name="recaptcha_secret_key" value="{{ get_setting($settings, 'recaptcha_secret_key') }}">
+										</div>
+									</div>
+
+									<div class="form-group row mt-2">
+										<div class="col-xl-8 offset-xl-4">
+											<button type="submit" class="btn btn-primary">{{ _lang('Save Settings') }}</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<div id="social_login" class="tab-pane fade">
+				<div class="card">
+					<div class="card-header">
+						<span class="panel-title">{{ _lang('Social Login Settings') }}</span>
+					</div>
+					<div class="card-body">
+						<form method="post" class="settings-submit params-panel" autocomplete="off" action="{{ route('settings.update_settings','store') }}">
+							{{ csrf_field() }}
+							<div class="row">
+								<div class="col-xl-12">
+									<h5 class="mb-3">{{ _lang('Google OAuth Settings') }}</h5>
+									
+									<div class="form-group row">
+										<label class="col-xl-4 col-form-label">{{ _lang('Enable Google Login') }}</label>
+										<div class="col-xl-8">
+											<select class="form-control auto-select" data-selected="{{ get_setting($settings, 'google_login_enabled', 0) }}" name="google_login_enabled" required>
+												<option value="0">{{ _lang('No') }}</option>
+												<option value="1">{{ _lang('Yes') }}</option>
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-xl-4 col-form-label">{{ _lang('Google Client ID') }}</label>
+										<div class="col-xl-8">
+											<input type="text" class="form-control" name="GOOGLE_CLIENT_ID" value="{{ get_setting($settings, 'GOOGLE_CLIENT_ID') }}" placeholder="Enter Google Client ID">
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-xl-4 col-form-label">{{ _lang('Google Client Secret') }}</label>
+										<div class="col-xl-8">
+											<input type="text" class="form-control" name="GOOGLE_CLIENT_SECRET" value="{{ get_setting($settings, 'GOOGLE_CLIENT_SECRET') }}" placeholder="Enter Google Client Secret">
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-xl-4 col-form-label">{{ _lang('Redirect URI') }}</label>
+										<div class="col-xl-8">
+											<input type="text" class="form-control" value="{{ url('login/google/callback') }}" readonly>
+											<small class="form-text text-muted">{{ _lang('Add this URL to your Google OAuth app settings') }}</small>
 										</div>
 									</div>
 

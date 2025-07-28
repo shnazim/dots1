@@ -469,8 +469,8 @@ Route::get('dashboard/json_package_wise_subscription', 'DashboardController@json
 Route::get('dashboard/json_yearly_reveneu', 'DashboardController@json_yearly_reveneu')->middleware('auth');
 
 //Social Login
-Route::get('/login/{provider}', 'Auth\SocialController@redirect');
-Route::get('/login/{provider}/callback', 'Auth\SocialController@callback');
+Route::get('/login/{provider}', 'Auth\SocialController@redirect')->name('social.login');
+Route::get('/login/{provider}/callback', 'Auth\SocialController@callback')->name('social.callback');
 
 Route::get('/installation', 'Install\InstallController@index');
 Route::get('install/database', 'Install\InstallController@database');

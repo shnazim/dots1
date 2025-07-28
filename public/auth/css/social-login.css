@@ -1,0 +1,107 @@
+/* Google Login Button Styles */
+.btn-google,
+a.btn-google,
+button.btn-google {
+    background-color: #ffffff !important;
+    color: #5f6368 !important;
+    border: 1px solid #dadce0 !important;
+    border-radius: 4px !important;
+    font-family: 'Google Sans', 'Roboto', Arial, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    padding: 8px 16px !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08) !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 40px !important;
+    text-align: center !important;
+    line-height: 1.2 !important;
+    position: relative !important;
+    overflow: hidden !important;
+    letter-spacing: 0.25px !important;
+}
+
+.btn-google:hover {
+    background-color: #f8f9fa;
+    border-color: #dadce0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    color: #3c4043;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.btn-google:active {
+    background-color: #f5f5f5;
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.btn-google .google-g-logo,
+a.btn-google .google-g-logo,
+button.btn-google .google-g-logo {
+    width: 18px !important;
+    height: 18px !important;
+    margin-right: 12px !important;
+    vertical-align: middle !important;
+    display: inline-block !important;
+    flex-shrink: 0 !important;
+}
+
+/* Social login divider */
+.social-divider {
+    text-align: center;
+    margin: 20px 0;
+    position: relative;
+}
+
+.social-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #e0e0e0;
+}
+
+.social-divider span {
+    background: #fff;
+    padding: 0 15px;
+    color: #757575;
+    font-size: 14px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Google button container */
+.social-login-container {
+    margin-top: 20px;
+}
+
+.social-login-container .btn {
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .btn-google {
+        font-size: 13px;
+        padding: 8px 14px;
+        min-height: 36px;
+        border-radius: 4px;
+    }
+    
+    .btn-google .google-g-logo {
+        width: 16px;
+        height: 16px;
+        margin-right: 10px;
+    }
+} 
