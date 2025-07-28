@@ -53,9 +53,131 @@
     });
 
     /*================================
-    sidebar menu
+    sidebar menu - Custom Implementation
     ==================================*/
-    $("#menu").metisMenu();
+    // Keep metismenu class for styling, but use custom dropdown logic
+    
+    // Completely disable metisMenu plugin
+    if (typeof $.fn.metisMenu !== 'undefined') {
+        // Override the metisMenu function to do nothing
+        $.fn.metisMenu = function() {
+            return this;
+        };
+    }
+    
+    // Remove any existing event handlers
+    $('#menu').off('click.metisMenu');
+    $('#menu li a').off('click.metisMenu');
+    $('#menu').off('click');
+    $('#menu li a').off('click');
+    
+    // Custom dropdown implementation with aggressive event handling
+    $(document).off('click.menuDropdown').on('click.menuDropdown', '#menu > li > a', function(e) {
+        var $this = $(this);
+        var $parent = $this.parent();
+        var $submenu = $this.next('ul');
+        
+        // Only handle if there's a submenu
+        if ($submenu.length > 0) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            
+            // Close other open menus
+            $('#menu > li').not($parent).removeClass('active active-nav');
+            $('#menu > li').not($parent).find('ul').slideUp(300).removeClass('in collapse');
+            
+            // Toggle current menu
+            $parent.toggleClass('active');
+            if ($parent.hasClass('active')) {
+                $submenu.slideDown(300).addClass('in');
+            } else {
+                $submenu.slideUp(300).removeClass('in collapse');
+            }
+            
+            return false;
+        }
+    });
+    
+    // Prevent submenu clicks from closing the menu
+    $(document).off('click.submenuClick').on('click.submenuClick', '#menu li ul li a', function(e) {
+        e.stopPropagation();
+    });
+    
+    // Prevent any other click handlers from interfering
+    $(document).off('click.menuOutside').on('click.menuOutside', function(e) {
+        if (!$(e.target).closest('#menu').length) {
+            $('#menu > li').removeClass('active active-nav');
+            $('#menu > li ul').slideUp(300).removeClass('in collapse');
+        }
+    });
+    
+    // Force submenus to stay visible when active
+    setInterval(function() {
+        $('#menu > li.active > ul').show().addClass('in');
+    }, 100);
+    
+    // Additional safety: ensure our handlers are the last ones
+    setTimeout(function() {
+        // Re-apply our event handlers to ensure they're the last ones
+        $(document).off('click.menuDropdown').on('click.menuDropdown', '#menu > li > a', function(e) {
+            var $this = $(this);
+            var $parent = $this.parent();
+            var $submenu = $this.next('ul');
+            
+            if ($submenu.length > 0) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                
+                $('#menu > li').not($parent).removeClass('active active-nav');
+                $('#menu > li').not($parent).find('ul').slideUp(300).removeClass('in collapse');
+                
+                $parent.toggleClass('active');
+                if ($parent.hasClass('active')) {
+                    $submenu.slideDown(300).addClass('in');
+                } else {
+                    $submenu.slideUp(300).removeClass('in collapse');
+                }
+                
+                return false;
+            }
+        });
+    }, 500);
+    
+    // Completely isolate sidebar from any Bootstrap dropdown conflicts
+    $(document).ready(function() {
+        // Remove any Bootstrap dropdown handlers from sidebar
+        $('#menu').off('click.bs.dropdown');
+        $('#menu li a').off('click.bs.dropdown');
+        
+        // Prevent Bootstrap from initializing dropdowns on sidebar
+        $('#menu [data-toggle="dropdown"]').removeAttr('data-toggle');
+        
+        // Add our own isolated event system
+        $('#menu').on('click', '> li > a', function(e) {
+            var $this = $(this);
+            var $parent = $this.parent();
+            var $submenu = $this.next('ul');
+            
+            if ($submenu.length > 0) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                
+                // Close others
+                $('#menu > li').not($parent).removeClass('active active-nav');
+                $('#menu > li').not($parent).find('ul').hide().removeClass('in collapse');
+                
+                // Toggle current
+                $parent.toggleClass('active');
+                if ($parent.hasClass('active')) {
+                    $submenu.show().addClass('in');
+                } else {
+                    $submenu.hide().removeClass('in collapse');
+                }
+                
+                return false;
+            }
+        });
+    });
 
     /*================================
     slimscroll activation

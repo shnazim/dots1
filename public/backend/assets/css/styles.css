@@ -246,10 +246,12 @@ h5,
     margin-right: 5px;
 }
 
-.metismenu > li > a {
+.metismenu > li > a,
+#menu > li > a {
     padding-left: 20px !important;
 }
-.metismenu li a {
+.metismenu li a,
+#menu li a {
     position: relative;
     display: block;
     color: #cccccc;
@@ -260,14 +262,16 @@ h5,
     font-weight: 400;
 }
 
-.metismenu li a i {
+.metismenu li a i,
+#menu li a i {
     color: #cccccc;
     -webkit-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
     width: 20px;
 }
 
-.metismenu li a:after {
+.metismenu li a:after,
+#menu li a:after {
     position: absolute;
     content: "\f105";
     font-family: "Font Awesome 5 Free";
@@ -278,74 +282,104 @@ h5,
     font-weight: 900;
 }
 
-.metismenu li.active > a:after {
+.metismenu li.active > a:after,
+#menu li.active > a:after {
     content: "\f107";
     color: #fff;
 }
 
-.metismenu > li.active-nav > a:after {
+.metismenu > li.active-nav > a:after,
+#menu > li.active-nav > a:after {
     color: #fff;
 }
 
-.metismenu li a:only-child:after {
+.metismenu li a:only-child:after,
+#menu li a:only-child:after {
     content: "";
 }
 
-.metismenu li a span {
+.metismenu li a span,
+#menu li a span {
     margin-left: 10px;
 }
 
 .metismenu li.active > a,
-.metismenu li:hover > a {
+.metismenu li:hover > a,
+#menu li.active > a,
+#menu li:hover > a {
     color: #fff;
 }
 
-.metismenu li.active-nav > a {
+.metismenu li.active-nav > a,
+#menu li.active-nav > a {
     color: #fff;
 }
 
-.metismenu li ul {
+.metismenu li ul,
+#menu li ul {
     padding-left: 37px;
     background: #0a0c37;
+    display: none;
 }
 
-.metismenu li ul li:first-child a {
+.metismenu li ul.in,
+#menu li ul.in {
+    display: block;
+}
+
+.metismenu li ul.collapse.in,
+#menu li ul.collapse.in {
+    display: block !important;
+}
+
+.metismenu li ul li:first-child a,
+#menu li ul li:first-child a {
     padding-top: 20px;
 }
 
-.metismenu li ul li:last-child a {
+.metismenu li ul li:last-child a,
+#menu li ul li:last-child a {
     padding-bottom: 20px;
 }
 
-.metismenu li.active-nav > a i {
+.metismenu li.active-nav > a i,
+#menu li.active-nav > a i {
     color: #fff;
 }
 
-.metismenu > li.active-nav > a {
-    color: #fff;
-    background: #ff793f;
-}
-
-.metismenu > li.active-nav:hover > a {
+.metismenu > li.active-nav > a,
+#menu > li.active-nav > a {
     color: #fff;
     background: #ff793f;
 }
 
-.metismenu > li:hover > a {
+.metismenu > li.active-nav:hover > a,
+#menu > li.active-nav:hover > a {
+    color: #fff;
+    background: #ff793f;
+}
+
+.metismenu > li:hover > a,
+#menu > li:hover > a {
     background: rgba(255, 255, 255, 0.1);
 }
 
 .metismenu li:hover > a,
-.metismenu li.active > a {
+.metismenu li.active > a,
+#menu li:hover > a,
+#menu li.active > a {
     color: #fff;
 }
 
 .metismenu li:hover > a i,
-.metismenu li.active > a i {
+.metismenu li.active > a i,
+#menu li:hover > a i,
+#menu li.active > a i {
     color: #fff;
 }
 
-.metismenu li li a:after {
+.metismenu li li a:after,
+#menu li li a:after {
     top: 6px;
 }
 
@@ -4946,3 +4980,105 @@ Payment Gateway
 .local-notification h3{font-size: 16px; font-weight: bold; color: #333333; margin-bottom: 15px;}
 .local-notification h4{font-size: 14px; font-weight: bold; color: #333333; margin-bottom: 15px;}
 .local-notification p{font-size: 14px; line-height: 1.5em; margin-bottom: 15px;}
+
+/* Custom dropdown implementation */
+.metismenu > li > a .menu-arrow,
+#menu > li > a .menu-arrow {
+    transition: transform 0.3s ease;
+}
+
+.metismenu > li.active > a .menu-arrow,
+#menu > li.active > a .menu-arrow {
+    transform: rotate(90deg);
+}
+
+/* Ensure submenu visibility */
+.metismenu li ul.nav-second-level,
+#menu li ul.nav-second-level {
+    display: none;
+    overflow: hidden;
+}
+
+.metismenu > li.active > ul.nav-second-level,
+#menu > li.active > ul.nav-second-level {
+    display: block;
+}
+
+/* Smooth animations */
+.metismenu li ul,
+#menu li ul {
+    transition: all 0.3s ease;
+}
+
+/* Prevent conflicts with Bootstrap dropdowns */
+.metismenu .dropdown-menu,
+#menu .dropdown-menu {
+    position: static !important;
+    float: none !important;
+    transform: none !important;
+}
+
+/* Force submenu visibility when active */
+.metismenu > li.active > ul,
+#menu > li.active > ul {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    overflow: visible !important;
+}
+
+/* Override any hiding styles */
+.metismenu > li.active > ul.nav-second-level,
+#menu > li.active > ul.nav-second-level {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Ensure submenu items are visible */
+.metismenu > li.active > ul li,
+#menu > li.active > ul li {
+    display: block !important;
+    visibility: visible !important;
+}
+
+/* Completely isolate sidebar from Bootstrap dropdown conflicts */
+#menu,
+.metismenu {
+    /* Prevent Bootstrap dropdown styles from affecting sidebar */
+    position: relative !important;
+}
+
+#menu .dropdown-menu,
+.metismenu .dropdown-menu {
+    /* Override Bootstrap dropdown positioning */
+    position: static !important;
+    float: none !important;
+    transform: none !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Ensure sidebar submenus are not affected by Bootstrap dropdown classes */
+#menu ul,
+.metismenu ul {
+    /* Override any Bootstrap dropdown styles */
+    position: static !important;
+    float: none !important;
+    transform: none !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #0a0c37 !important;
+    padding-left: 37px !important;
+}
