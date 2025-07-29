@@ -18,7 +18,7 @@
                 </div>
 
             <!-- Single Documents - Compact -->
-            <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+            <div class="bg-gradient-to-br from-orange-500 via-orange-600 to-red-600 rounded-xl shadow-2xl overflow-hidden hover:shadow-3xl transition-all duration-300" style="box-shadow: 2px 0 32px rgba(249, 115, 22, 0.2);">
                 <div class="bg-gradient-to-r from-amber-500 to-orange-500 p-4">
                     <h3 class="text-lg font-bold text-white flex items-center">
                         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -29,44 +29,44 @@
                 </div>
                 <div class="p-4">
                     <div class="space-y-3">
-                        <a href="{{ route('documents.invoice.create') }}" class="group flex items-center p-3 bg-gray-100/80 rounded-lg hover:bg-gray-200/80 transition-all duration-300">
+                        <a href="{{ route('documents.invoice.create') }}" class="group flex items-center p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
                             <div class="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
                                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
                                 </svg>
                             </div>
-                            <span class="font-semibold text-gray-800 text-sm">Create Invoice</span>
+                            <span class="font-semibold text-white text-sm">Create Invoice</span>
                         </a>
-                        <a href="{{ route('documents.quotation.create') }}" class="group flex items-center p-3 bg-gray-100/80 rounded-lg hover:bg-gray-200/80 transition-all duration-300">
+                        <a href="{{ route('documents.quotation.create') }}" class="group flex items-center p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
                             <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
                                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M9,7V15A1,1 0 0,0 10,16H14A1,1 0 0,0 15,15V7H9M10,8H14V15H10V8Z"/>
                                 </svg>
                             </div>
-                            <span class="font-semibold text-gray-800 text-sm">Create Quotation</span>
+                            <span class="font-semibold text-white text-sm">Create Quotation</span>
                         </a>
-                        <a href="{{ route('documents.estimate.create') }}" class="group flex items-center p-3 bg-gray-100/80 rounded-lg hover:bg-gray-200/80 transition-all duration-300">
+                        <a href="{{ route('documents.estimate.create') }}" class="group flex items-center p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
                             <div class="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
                                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M7,2H17A2,2 0 0,1 19,4V20A2,2 0 0,1 17,22H7A2,2 0 0,1 5,20V4A2,2 0 0,1 7,2M7,4V8H17V4H7M7,10V12H9V10H7M11,10V12H13V10H11M15,10V12H17V10H15M7,14V16H9V14H7M11,14V16H13V14H11M15,14V16H17V14H15M7,18V20H9V18H7M11,18V20H13V18H11M15,18V20H17V18H15Z"/>
                                 </svg>
                             </div>
-                            <span class="font-semibold text-gray-800 text-sm">Create Estimate</span>
+                            <span class="font-semibold text-white text-sm">Create Estimate</span>
                         </a>
-                        <a href="{{ route('documents.po.create') }}" class="group flex items-center p-3 bg-gray-100/80 rounded-lg hover:bg-gray-200/80 transition-all duration-300">
+                        <a href="{{ route('documents.po.create') }}" class="group flex items-center p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
                             <div class="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
                                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5H5.21L4.27,2H1M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z"/>
                                 </svg>
                             </div>
-                            <span class="font-semibold text-gray-800 text-sm">Create PO</span>
+                            <span class="font-semibold text-white text-sm">Create PO</span>
                         </a>
                     </div>
                 </div>
             </div>
 
             <!-- Batch Documents - Compact -->
-            <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+            <div class="bg-gradient-to-br from-orange-500 via-orange-600 to-red-600 rounded-xl shadow-2xl overflow-hidden hover:shadow-3xl transition-all duration-300" style="box-shadow: 2px 0 32px rgba(249, 115, 22, 0.2);">
                 <div class="bg-gradient-to-r from-amber-500 to-orange-500 p-4">
                     <h3 class="text-lg font-bold text-white flex items-center">
                         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -77,44 +77,44 @@
                 </div>
                 <div class="p-4">
                     <div class="space-y-3">
-                        <a href="{{ route('documents.invoice.batch') }}" class="group flex items-center p-3 bg-gray-100/80 rounded-lg hover:bg-gray-200/80 transition-all duration-300">
+                        <a href="{{ route('documents.invoice.batch') }}" class="group flex items-center p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
                             <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
                                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
                                 </svg>
                             </div>
-                            <span class="font-semibold text-gray-800 text-sm">Batch Invoices</span>
+                            <span class="font-semibold text-white text-sm">Batch Invoices</span>
                         </a>
-                        <a href="{{ route('documents.quotation.batch') }}" class="group flex items-center p-3 bg-gray-100/80 rounded-lg hover:bg-gray-200/80 transition-all duration-300">
+                        <a href="{{ route('documents.quotation.batch') }}" class="group flex items-center p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
                             <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
                                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M9,7V15A1,1 0 0,0 10,16H14A1,1 0 0,0 15,15V7H9M10,8H14V15H10V8Z"/>
                                 </svg>
                             </div>
-                            <span class="font-semibold text-gray-800 text-sm">Batch Quotations</span>
+                            <span class="font-semibold text-white text-sm">Batch Quotations</span>
                         </a>
-                        <a href="{{ route('documents.estimate.batch') }}" class="group flex items-center p-3 bg-gray-100/80 rounded-lg hover:bg-gray-200/80 transition-all duration-300">
+                        <a href="{{ route('documents.estimate.batch') }}" class="group flex items-center p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
                             <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
                                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M7,2H17A2,2 0 0,1 19,4V20A2,2 0 0,1 17,22H7A2,2 0 0,1 5,20V4A2,2 0 0,1 7,2M7,4V8H17V4H7M7,10V12H9V10H7M11,10V12H13V10H11M15,10V12H17V10H15M7,14V16H9V14H7M11,14V16H13V14H11M15,14V16H17V14H15M7,18V20H9V18H7M11,18V20H13V18H11M15,18V20H17V18H15Z"/>
                                 </svg>
                             </div>
-                            <span class="font-semibold text-gray-800 text-sm">Batch Estimates</span>
+                            <span class="font-semibold text-white text-sm">Batch Estimates</span>
                         </a>
-                        <a href="{{ route('documents.po.batch') }}" class="group flex items-center p-3 bg-gray-100/80 rounded-lg hover:bg-gray-200/80 transition-all duration-300">
+                        <a href="{{ route('documents.po.batch') }}" class="group flex items-center p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
                             <div class="w-10 h-10 bg-gradient-to-br from-red-500 to-pink-600 rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
                                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5H5.21L4.27,2H1M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z"/>
                                 </svg>
                             </div>
-                            <span class="font-semibold text-gray-800 text-sm">Batch POs</span>
+                            <span class="font-semibold text-white text-sm">Batch POs</span>
                         </a>
                     </div>
                 </div>
             </div>
 
             <!-- ERP Integrations - Compact -->
-            <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+            <div class="bg-gradient-to-br from-orange-500 via-orange-600 to-red-600 rounded-xl shadow-2xl overflow-hidden hover:shadow-3xl transition-all duration-300" style="box-shadow: 2px 0 32px rgba(249, 115, 22, 0.2);">
                 <div class="bg-gradient-to-r from-amber-500 to-orange-500 p-4">
                     <h3 class="text-lg font-bold text-white flex items-center">
                         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -125,29 +125,29 @@
                 </div>
                 <div class="p-4">
                     <div class="space-y-3">
-                        <a href="{{ route('integrations.quickbooks.setup') }}" class="group flex items-center p-3 bg-gray-100/80 rounded-lg hover:bg-gray-200/80 transition-all duration-300">
+                        <a href="{{ route('integrations.quickbooks.setup') }}" class="group flex items-center p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
                             <div class="w-10 h-10 bg-white/80 backdrop-blur-sm rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
                                 <img src="{{ asset('public/backend/images/quickbooks.svg') }}" alt="QuickBooks" class="w-6 h-6 object-contain">
                             </div>
-                            <span class="font-semibold text-gray-800 text-sm">QuickBooks</span>
+                            <span class="font-semibold text-white text-sm">QuickBooks</span>
                         </a>
-                        <a href="{{ route('integrations.sap.setup') }}" class="group flex items-center p-3 bg-gray-100/80 rounded-lg hover:bg-gray-200/80 transition-all duration-300">
+                        <a href="{{ route('integrations.sap.setup') }}" class="group flex items-center p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
                             <div class="w-10 h-10 bg-white/80 backdrop-blur-sm rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
                                 <img src="{{ asset('public/backend/images/sap.svg') }}" alt="SAP" class="w-6 h-6 object-contain">
                             </div>
-                            <span class="font-semibold text-gray-800 text-sm">SAP B1</span>
+                            <span class="font-semibold text-white text-sm">SAP B1</span>
                         </a>
-                        <a href="{{ route('integrations.xero.setup') }}" class="group flex items-center p-3 bg-gray-100/80 rounded-lg hover:bg-gray-200/80 transition-all duration-300">
+                        <a href="{{ route('integrations.xero.setup') }}" class="group flex items-center p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
                             <div class="w-10 h-10 bg-white/80 backdrop-blur-sm rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
                                 <img src="{{ asset('public/backend/images/xero.svg') }}" alt="Xero" class="w-6 h-6 object-contain">
                             </div>
-                            <span class="font-semibold text-gray-800 text-sm">Xero</span>
+                            <span class="font-semibold text-white text-sm">Xero</span>
                         </a>
-                        <a href="{{ route('integrations.dynamics.setup') }}" class="group flex items-center p-3 bg-gray-100/80 rounded-lg hover:bg-gray-200/80 transition-all duration-300">
+                        <a href="{{ route('integrations.dynamics.setup') }}" class="group flex items-center p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
                             <div class="w-10 h-10 bg-white/80 backdrop-blur-sm rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
                                 <img src="{{ asset('public/backend/images/business-central.svg') }}" alt="Business Central" class="w-6 h-6 object-contain">
                             </div>
-                            <span class="font-semibold text-gray-800 text-sm">Business Central</span>
+                            <span class="font-semibold text-white text-sm">Business Central</span>
                         </a>
                     </div>
                 </div>
