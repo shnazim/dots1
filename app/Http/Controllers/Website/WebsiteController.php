@@ -16,6 +16,8 @@ use App\Utilities\Overrider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class WebsiteController extends Controller {
 
@@ -99,6 +101,8 @@ class WebsiteController extends Controller {
         return view('website.pricing', $data);
     }
 
+
+
     public function blogs($slug = '') {
         $data = [];
         if ($slug) {
@@ -169,6 +173,154 @@ class WebsiteController extends Controller {
             } catch (\Exception $e) {
                 return back()->with('error', $e->getMessage())->withInput();
             }
+        }
+    }
+
+    /**
+     * Store quotation from website form
+     */
+    public function storeQuotation(Request $request) {
+        @ini_set('max_execution_time', 0);
+        @set_time_limit(0);
+
+        $this->validate($request, [
+            'customer_name' => 'required|string|max:255',
+            'customer_email' => 'required|email',
+            'customer_phone' => 'nullable|string|max:20',
+            'customer_address' => 'nullable|string',
+            'company_name' => 'nullable|string|max:255',
+            'title' => 'required|string|max:255',
+            'quotation_number' => 'nullable|string|max:100',
+            'po_so_number' => 'nullable|string|max:100',
+            'quotation_date' => 'required|date',
+            'expired_date' => 'required|date|after:quotation_date',
+            'project_description' => 'nullable|string',
+            'template' => 'nullable|string|max:50',
+            'items' => 'required|array|min:1',
+            'items.*.name' => 'required|string|max:255',
+            'items.*.description' => 'nullable|string',
+            'items.*.quantity' => 'required|numeric|min:0.1',
+            'items.*.unit_price' => 'required|numeric|min:0',
+            'items.*.tax' => 'nullable|numeric|min:0|max:100',
+            'notes' => 'nullable|string',
+            'footer' => 'nullable|string',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            // Create or find customer
+            $customer = \App\Models\Customer::where('email', $request->customer_email)->first();
+            
+            if (!$customer) {
+                // Get default business for website quotations
+                $defaultBusiness = \App\Models\Business::first();
+                if (!$defaultBusiness) {
+                    // Create a default business if none exists
+                    $defaultBusiness = new \App\Models\Business();
+                    $defaultBusiness->name = 'Default Business';
+                    $defaultBusiness->user_id = 1; // Default user
+                    $defaultBusiness->status = 1;
+                    $defaultBusiness->save();
+                }
+                
+                $customer = new \App\Models\Customer();
+                $customer->user_id = 1; // Default user
+                $customer->business_id = $defaultBusiness->id;
+                $customer->name = $request->customer_name;
+                $customer->email = $request->customer_email;
+                $customer->mobile = $request->customer_phone;
+                $customer->address = $request->customer_address;
+                $customer->company_name = $request->company_name;
+                $customer->currency = 'USD'; // Default currency
+                $customer->save();
+            }
+
+            // Calculate totals with individual tax rates
+            $subtotal = 0;
+            $totalTax = 0;
+            foreach ($request->items as $item) {
+                $itemSubtotal = $item['quantity'] * $item['unit_price'];
+                $itemTax = $itemSubtotal * (($item['tax'] ?? 0) / 100);
+                $subtotal += $itemSubtotal;
+                $totalTax += $itemTax;
+            }
+            $grandTotal = $subtotal + $totalTax;
+
+            // Create quotation
+            $quotation = new \App\Models\Quotation();
+            $quotation->customer_id = $customer->id;
+            $quotation->business_id = $customer->business_id;
+            $quotation->user_id = 1; // Default user
+            $quotation->title = $request->title;
+            $quotation->quotation_number = $request->quotation_number ?: 'QT-' . date('Y') . '-' . str_pad(\App\Models\Quotation::count() + 1, 4, '0', STR_PAD_LEFT);
+            $quotation->po_so_number = $request->po_so_number;
+            $quotation->quotation_date = $request->quotation_date;
+            $quotation->expired_date = $request->expired_date;
+            $quotation->sub_total = $subtotal;
+            $quotation->grand_total = $grandTotal;
+            $quotation->discount = 0;
+            $quotation->discount_type = 1; // Fixed
+            $quotation->discount_value = 0;
+            $quotation->template_type = 1;
+            $quotation->template = $request->template ?: 'default';
+            $quotation->note = $request->notes;
+            $quotation->footer = $request->footer;
+            $quotation->save();
+
+            // Add quotation items
+            foreach ($request->items as $item) {
+                // Get or create a default product
+                $product = \App\Models\Product::first();
+                if (!$product) {
+                    $product = new \App\Models\Product();
+                    $product->name = 'Default Product';
+                    $product->type = 'sell';
+                    $product->user_id = 1;
+                    $product->business_id = $customer->business_id;
+                    $product->save();
+                }
+                
+                $quotationItem = new \App\Models\QuotationItem();
+                $quotationItem->quotation_id = $quotation->id;
+                $quotationItem->product_id = $product->id;
+                $quotationItem->product_name = $item['name'];
+                $quotationItem->description = '';
+                $quotationItem->quantity = $item['quantity'];
+                $quotationItem->unit_cost = $item['unit_price'];
+                $quotationItem->sub_total = $item['quantity'] * $item['unit_price'];
+                $quotationItem->user_id = 1; // Default user
+                $quotationItem->business_id = $customer->business_id;
+                $quotationItem->save();
+            }
+
+            DB::commit();
+
+            // Generate PDF
+            $pdf = \PDF::loadView('documents.quotation.default', compact('quotation'));
+            $filename = 'quotation_' . $quotation->quotation_number . '.pdf';
+            $pdfPath = storage_path('app/public/quotations/' . $filename);
+            
+            // Ensure directory exists
+            if (!file_exists(dirname($pdfPath))) {
+                mkdir(dirname($pdfPath), 0755, true);
+            }
+            
+            $pdf->save($pdfPath);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Quotation generated successfully! You can download it now.',
+                'download_url' => asset('storage/quotations/' . $filename),
+                'quotation_id' => $quotation->id
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'success' => false,
+                'message' => 'Error generating quotation: ' . $e->getMessage()
+            ], 500);
         }
     }
 

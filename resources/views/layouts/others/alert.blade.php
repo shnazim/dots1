@@ -17,6 +17,7 @@
     @endif
 
 
+    @if(isset($errors) && $errors->any())
     @foreach ($errors->all() as $error)
         @if ($loop->first)
             $("#main_alert > span.msg").html("<i class='ti-alert mr-1'></i>{{ $error }} ");
@@ -47,6 +48,7 @@
         @endif
 
     @endforeach
+    @endif
 
 })(jQuery);
 

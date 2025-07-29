@@ -112,7 +112,18 @@
     </ul>
 </li>
 
+@if(request()->has('activeBusiness') && request()->activeBusiness)
 <li>
 	<a href="{{ route('business.settings', request()->activeBusiness->id) }}"><i class="fas fa-tools"></i><span>{{ _lang('Business Settings') }}</span></a>
+</li>
+@endif
+
+<li>
+	<a href="javascript: void(0);"><i class="fas fa-plug"></i><span>{{ _lang('Integrations') }}</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+	<ul class="nav-second-level" aria-expanded="false">
+		<li class="nav-item"><a class="nav-link" href="{{ route('integrations.index') }}">{{ _lang('Manage Integrations') }}</a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ route('integrations.instructions') }}">{{ _lang('Setup Instructions') }}</a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ route('integrations.status') }}">{{ _lang('Integration Status') }}</a></li>
+    </ul>
 </li>
 @endif

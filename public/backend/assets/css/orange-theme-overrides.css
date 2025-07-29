@@ -1,0 +1,160 @@
+/* Orange Theme Overrides for Menu System */
+
+/* Sidebar Menu Orange Theme */
+.sidebar-menu {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 50%, #dc2626 100%) !important;
+    box-shadow: 2px 0 32px rgba(249, 115, 22, 0.2) !important;
+}
+
+.sidebar-menu .extra-details {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 50%, #dc2626 100%) !important;
+}
+
+/* Menu Items */
+.metismenu li a,
+#menu li a {
+    color: #ffffff !important;
+    transition: all 0.3s ease !important;
+}
+
+.metismenu li a:hover,
+#menu li a:hover {
+    color: #ffffff !important;
+    background: linear-gradient(90deg, rgba(245, 158, 11, 0.2) 0%, rgba(249, 115, 22, 0.2) 100%) !important;
+    box-shadow: 0 2px 4px rgba(249, 115, 22, 0.2) !important;
+}
+
+/* Active Menu Items */
+.metismenu > li.active-nav > a,
+#menu > li.active-nav > a {
+    color: #ffffff !important;
+    background: linear-gradient(90deg, #f59e0b 0%, #f97316 100%) !important;
+    box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3) !important;
+}
+
+.metismenu li.active > a,
+#menu li.active > a {
+    color: #ffffff !important;
+    background: linear-gradient(90deg, #f59e0b 0%, #f97316 100%) !important;
+}
+
+/* Submenu Background */
+.metismenu li ul,
+#menu li ul {
+    background: linear-gradient(135deg, #ea580c 0%, #dc2626 100%) !important;
+}
+
+/* Menu Icons */
+.metismenu li a i,
+#menu li a i {
+    color: #ffffff !important;
+}
+
+.metismenu li:hover > a i,
+#menu li:hover > a i {
+    color: #ffffff !important;
+}
+
+/* Menu Arrows */
+.metismenu li a:after,
+#menu li a:after {
+    color: #ffffff !important;
+}
+
+/* Header Area */
+.header-area {
+    background: #ffffff !important;
+    border-bottom: 1px solid rgba(249, 115, 22, 0.1) !important;
+}
+
+/* Navigation Button */
+.nav-btn span {
+    background: #f97316 !important;
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1) !important;
+}
+
+/* User Profile */
+.user-name {
+    color: #f97316 !important;
+}
+
+.user-name:hover {
+    color: #ea580c !important;
+}
+
+/* Dropdown Menus */
+.notification-area .dropdown-menu {
+    border: 1px solid rgba(249, 115, 22, 0.1) !important;
+}
+
+.notification-area .dropdown-menu a:hover {
+    background: linear-gradient(90deg, rgba(245, 158, 11, 0.1) 0%, rgba(249, 115, 22, 0.1) 100%) !important;
+    color: #f97316 !important;
+}
+
+/* Menu Arrow Animation */
+.metismenu > li.active > a .menu-arrow,
+#menu > li.active > a .menu-arrow {
+    transform: rotate(90deg) !important;
+    color: #ffffff !important;
+}
+
+/* Submenu Animation */
+.metismenu li ul,
+#menu li ul {
+    transition: all 0.3s ease !important;
+}
+
+/* Menu Hover Effects */
+.metismenu > li:hover > a,
+#menu > li:hover > a {
+    background: linear-gradient(90deg, rgba(245, 158, 11, 0.2) 0%, rgba(249, 115, 22, 0.2) 100%) !important;
+    box-shadow: 0 2px 4px rgba(249, 115, 22, 0.2) !important;
+}
+
+/* Active Submenu Items */
+.metismenu li ul li a:hover,
+#menu li ul li a:hover {
+    background: linear-gradient(90deg, rgba(245, 158, 11, 0.3) 0%, rgba(249, 115, 22, 0.3) 100%) !important;
+    color: #ffffff !important;
+}
+
+/* Menu Text */
+.metismenu li a span,
+#menu li a span {
+    color: #ffffff !important;
+}
+
+/* Menu Arrow Icons */
+.metismenu > li > a .menu-arrow,
+#menu > li > a .menu-arrow {
+    color: #ffffff !important;
+}
+
+/* Ensure proper z-index for dropdowns */
+.notification-area .dropdown-menu.show {
+    z-index: 1050 !important;
+}
+
+/* Menu collapse animation */
+.metismenu li ul.collapse,
+#menu li ul.collapse {
+    display: none !important;
+}
+
+.metismenu li ul.in,
+#menu li ul.in {
+    display: block !important;
+}
+
+/* Responsive menu adjustments */
+@media (max-width: 768px) {
+    .sidebar-menu {
+        background: linear-gradient(135deg, #f97316 0%, #ea580c 50%, #dc2626 100%) !important;
+    }
+    
+    .metismenu li a,
+    #menu li a {
+        color: #ffffff !important;
+    }
+} 

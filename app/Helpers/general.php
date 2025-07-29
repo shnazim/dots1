@@ -159,7 +159,13 @@ if (! function_exists('has_permission')) {
     function has_permission($name)
     {
         $permission_list = request()->permissionList;
-        $permission      = $permission_list->firstWhere('permission', $name);
+        
+        // Check if permission_list exists and is not null
+        if (!$permission_list || !is_object($permission_list)) {
+            return false;
+        }
+        
+        $permission = $permission_list->firstWhere('permission', $name);
 
         if ($permission != null) {
             return true;
@@ -261,6 +267,11 @@ if (! function_exists('get_business_option')) {
 if (! function_exists('get_setting')) {
     function get_setting($settings, $name, $optional = '')
     {
+        // Check if settings exists and is not null
+        if (!$settings || !is_object($settings)) {
+            return $optional;
+        }
+        
         $row = $settings->firstWhere('name', $name);
         if ($row != null) {
             return $row->value;
@@ -907,6 +918,11 @@ if (! function_exists('update_currency_exchange_rate')) {
             DB::beginTransaction();
 
             foreach ($response['rates'] as $currency => $rate) {
+                // Check if currency_list exists and is not null
+                if (!$currency_list || !is_object($currency_list)) {
+                    continue;
+                }
+                
                 $existingCurrency = $currency_list->firstWhere('name', $currency);
                 if ($existingCurrency) {
                     $existingCurrency->exchange_rate = $response['rates'][$currency] / $response['rates'][$system_base_currency];
@@ -1216,10 +1232,11 @@ if (! function_exists('get_biz_currency_position')) {
 if (! function_exists('package')) {
     function package($owner_id = '')
     {
-        if (request()->activeBusiness) {
+        if (request()->activeBusiness && request()->activeBusiness->user && request()->activeBusiness->user->package) {
             $package = request()->activeBusiness->user->package;
         } else {
-            $package = User::find($owner_id)->package;
+            $user = User::find($owner_id);
+            $package = $user ? $user->package : null;
         }
         return $package;
     }
@@ -1228,8 +1245,19 @@ if (! function_exists('package')) {
 if (! function_exists('has_limit')) {
     function has_limit($table, $packageColumn, $totalLimit = true, $filter = null)
     {
+        // Check if activeBusiness and user exist
+        if (!request()->activeBusiness || !request()->activeBusiness->user) {
+            return 999; // Return unlimited if no business context
+        }
+        
         $user         = request()->activeBusiness->user;
         $package      = request()->activeBusiness->user->package;
+        
+        // Check if package exists
+        if (!$package) {
+            return 999; // Return unlimited if no package
+        }
+        
         $packageLimit = $package->{$packageColumn};
 
         if ($packageLimit == '-1') {

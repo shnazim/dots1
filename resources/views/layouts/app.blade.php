@@ -21,6 +21,7 @@
 		<link rel="stylesheet" href="{{ asset('public/backend/assets/css/fontawesome.css') }}">
 		<link rel="stylesheet" href="{{ asset('public/backend/assets/css/themify-icons.css') }}">
 		<link rel="stylesheet" href="{{ asset('public/backend/plugins/metisMenu/metisMenu.css') }}">
+		<link rel="stylesheet" href="{{ asset('public/backend/assets/css/orange-theme-overrides.css') }}">
 
 		@if(isset(request()->activeBusiness->id))
 			@if(get_business_option('backend_direction') == "rtl")
@@ -109,21 +110,32 @@
 			<div class="sidebar-menu">
 				@if($user_type == 'user')
 				<div class="extra-details">
-					<img class="sidebar-logo" src="{{ asset('public/uploads/media/' . request()->activeBusiness->logo) }}" alt="logo">
+					@if(request()->has('activeBusiness') && request()->activeBusiness)
+						<img class="sidebar-logo" src="{{ asset('public/uploads/media/' . request()->activeBusiness->logo) }}" alt="logo">
 
-					<div class="sidebar-header d-flex justify-content-center">
-						<a href="{{ route('dashboard.index') }}" class="dropdown-toggle business-switch" data-toggle="dropdown">
-							<h4 class="text-white d-flex align-items-center"><span>{{ request()->activeBusiness->name }}</span><i class="fa fa-angle-down ml-1"></i></h4>
-						</a>
-						<div class="dropdown-menu">
-							@foreach(request()->businessList as $business)
-							<a class="dropdown-item" href="{{ route('business.switch_business', $business->id) }}">
-								<i class="{{ request()->activeBusiness->id == $business->id ? 'fas fa-check-circle text-primary' : 'far fa-circle' }}"></i>
-								<span class="ml-2 {{ request()->activeBusiness->id == $business->id ? 'text-primary font-weight-bold' : '' }}">{{ $business->name }}</span>
+						<div class="sidebar-header d-flex justify-content-center">
+							<a href="{{ route('dashboard.index') }}" class="dropdown-toggle business-switch" data-toggle="dropdown">
+								<h4 class="text-white d-flex align-items-center"><span>{{ request()->activeBusiness->name }}</span><i class="fa fa-angle-down ml-1"></i></h4>
 							</a>
-							@endforeach
+							<div class="dropdown-menu">
+								@if(request()->has('businessList') && request()->businessList)
+									@foreach(request()->businessList as $business)
+									<a class="dropdown-item" href="{{ route('business.switch_business', $business->id) }}">
+										<i class="{{ request()->activeBusiness->id == $business->id ? 'fas fa-check-circle text-primary' : 'far fa-circle' }}"></i>
+										<span class="ml-2 {{ request()->activeBusiness->id == $business->id ? 'text-primary font-weight-bold' : '' }}">{{ $business->name }}</span>
+									</a>
+									@endforeach
+								@endif
+							</div>
 						</div>
-					</div>
+					@else
+						<img class="sidebar-logo" src="{{ get_logo() }}" alt="logo">
+						<div class="sidebar-header d-flex justify-content-center">
+							<a href="{{ route('dashboard.index') }}">
+								<h4 class="text-white d-flex align-items-center"><span>Business Setup Required</span></h4>
+							</a>
+						</div>
+					@endif
 				</div>
 				@elseif($user_type == 'admin')
 				<div class="extra-details">

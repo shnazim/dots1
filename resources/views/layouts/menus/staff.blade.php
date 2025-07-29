@@ -79,7 +79,7 @@
 	</ul>
 </li>
 
-@if(package()->payroll_module == 1)
+@if(package() && package()->payroll_module == 1)
 <li>
 	<a href="javascript: void(0);"><i class="fas fa-money-check-alt"></i><span>{{ _lang('HR & Payroll') }}</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
 	<ul class="nav-second-level" aria-expanded="false">
@@ -153,7 +153,7 @@
 		<li class="nav-item"><a class="nav-link" href="{{ route('reports.purchase_by_vendor') }}">{{ _lang('Purchases by Vendor') }}</a></li>
         @endif
 
-		@if(package()->payroll_module == 1)
+		@if(package() && package()->payroll_module == 1)
 		@if(has_permission('reports.attendance_report'))
 		<li class="nav-item"><a class="nav-link" href="{{ route('reports.attendance_report') }}">{{ _lang('Attendance Report') }}</a></li>
 		@endif
@@ -168,3 +168,14 @@
 		@endif
 	</ul>
 </li>
+
+@if(has_permission('integrations.index'))
+<li>
+	<a href="javascript: void(0);"><i class="fas fa-plug"></i><span>{{ _lang('Integrations') }}</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+	<ul class="nav-second-level" aria-expanded="false">
+		<li class="nav-item"><a class="nav-link" href="{{ route('integrations.index') }}">{{ _lang('Manage Integrations') }}</a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ route('integrations.instructions') }}">{{ _lang('Setup Instructions') }}</a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ route('integrations.status') }}">{{ _lang('Integration Status') }}</a></li>
+    </ul>
+</li>
+@endif

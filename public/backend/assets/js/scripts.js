@@ -53,50 +53,39 @@
     });
 
     /*================================
-    sidebar menu - Custom Implementation
+    sidebar menu - MetisMenu Implementation
     ==================================*/
-    // Keep metismenu class for styling, but use custom dropdown logic
-    
-    // Completely disable metisMenu plugin
+    // Initialize metisMenu for sidebar navigation
     if (typeof $.fn.metisMenu !== 'undefined') {
-        // Override the metisMenu function to do nothing
-        $.fn.metisMenu = function() {
-            return this;
-        };
-    }
-    
-    // Remove any existing event handlers
-    $('#menu').off('click.metisMenu');
-    $('#menu li a').off('click.metisMenu');
-    $('#menu').off('click');
-    $('#menu li a').off('click');
-    
-    // Custom dropdown implementation with aggressive event handling
-    $(document).off('click.menuDropdown').on('click.menuDropdown', '#menu > li > a', function(e) {
-        var $this = $(this);
-        var $parent = $this.parent();
-        var $submenu = $this.next('ul');
-        
-        // Only handle if there's a submenu
-        if ($submenu.length > 0) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
+        $("#menu").metisMenu();
+    } else {
+        // Fallback custom implementation if metisMenu is not available
+        $(document).on('click', '#menu > li > a', function(e) {
+            var $this = $(this);
+            var $parent = $this.parent();
+            var $submenu = $this.next('ul');
             
-            // Close other open menus
-            $('#menu > li').not($parent).removeClass('active active-nav');
-            $('#menu > li').not($parent).find('ul').slideUp(300).removeClass('in collapse');
-            
-            // Toggle current menu
-            $parent.toggleClass('active');
-            if ($parent.hasClass('active')) {
-                $submenu.slideDown(300).addClass('in');
-            } else {
-                $submenu.slideUp(300).removeClass('in collapse');
+            // Only handle if there's a submenu
+            if ($submenu.length > 0) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                
+                // Close other open menus
+                $('#menu > li').not($parent).removeClass('active active-nav');
+                $('#menu > li').not($parent).find('ul').slideUp(300).removeClass('in collapse');
+                
+                // Toggle current menu
+                $parent.toggleClass('active');
+                if ($parent.hasClass('active')) {
+                    $submenu.slideDown(300).addClass('in');
+                } else {
+                    $submenu.slideUp(300).removeClass('in collapse');
+                }
+                
+                return false;
             }
-            
-            return false;
-        }
-    });
+        });
+    }
     
     // Prevent submenu clicks from closing the menu
     $(document).off('click.submenuClick').on('click.submenuClick', '#menu li ul li a', function(e) {

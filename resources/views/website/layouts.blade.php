@@ -9,6 +9,30 @@
         <!-- Favicon-->
         <link rel="icon" type="image/png" href="{{ get_favicon() }}" />
 
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            primary: '#f97316', // orange-500
+                            secondary: '#6c757d',
+                            success: '#f59e0b', // amber-500
+                            info: '#ea580c', // orange-600
+                            warning: '#ffc107',
+                            danger: '#dc2626', // red-600
+                            'navy': {
+                                900: '#92400e', // amber-900
+                                800: '#ea580c', // orange-800
+                                700: '#c2410c', // orange-700
+                            }
+                        }
+                    }
+                }
+            }
+        </script>
+
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -34,73 +58,164 @@
             <div class="lds-dual-ring"></div>
         </div>
 
-        <main class="flex-shrink-0">
-            <!--Top Navbar-->
-            <nav class="top-navbar">
-                <div class="container">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="phone"><i class="bi bi-telephone me-2"></i> {{ get_option('phone') }}</span>
-                        <ul>
-                            <li class="nav-item">
-                                <a class="nav-link has-submenu text-white py-2 text-nowrap" href="#"><i class="bi bi-translate me-2 d-none d-lg-inline"></i> {{ explode('---', get_language())[0] }}</a>
-                                <ul class="submenu">
+        <!--Top Navigation with Language-->
+        <nav class="top-navbar">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="phone"><i class="bi bi-telephone me-2"></i> {{ @get_option('phone') ?: '+1 234 567 8900' }}</span>
+                    <ul>
+                        <li class="nav-item">
+                            <a class="nav-link has-submenu text-white py-2 text-nowrap" href="#"><i class="bi bi-translate me-2 d-none d-lg-inline"></i> {{ @explode('---', get_language())[0] ?: 'English' }}</a>
+                            <ul class="submenu">
+                                @try
                                     @foreach(get_language_list() as $language)
-                                    <li class="nav-item">
-                                        <a class="nav-link d-flex align-items-center" href="{{ route('switch_language') }}?language={{ $language }}">
-                                            <img class="avatar avatar-xss avatar-circle me-2" src="{{ asset('public/backend/plugins/flag-icon-css/flags/1x1/'.explode('---', $language)[1].'.svg') }}"> 
-                                            <span>{{ explode('---', $language)[0] }}</span>
-                                        </a>
-                                    </li> 
-                                    @endforeach
-                                </ul>
-                            </li> 
-                        </ul>
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center" href="{{ route('switch_language') }}?language={{ $language }}">
+                                        <img class="avatar avatar-xss avatar-circle me-2" src="{{ asset('public/backend/plugins/flag-icon-css/flags/1x1/'.explode('---', $language)[1].'.svg') }}"> 
+                                        <span>{{ explode('---', $language)[0] }}</span>
+                                    </a>
+                                </li> 
+                                @endforeach
+                                @catch(Exception $e)
+                                    <!-- Languages not available -->
+                                @endtry
+                            </ul>
+                        </li> 
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Navigation Menu -->
+        <nav class="bg-white shadow-lg border-b border-gray-200" id="main_navbar">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <!-- Logo -->
+                    <div class="flex-shrink-0">
+                        <a href="{{ url('/') }}" class="flex items-center">
+                            <img src="{{ @get_logo() ?: asset('public/backend/images/company-logo.png') }}" alt="logo" class="h-8 w-auto"/>
+                        </a>
+                    </div>
+
+                    <!-- Desktop Navigation -->
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-8">
+                            <a href="{{ url('/') }}" class="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 {{ url()->current() == url('/') ? 'text-orange-600 bg-orange-50' : '' }}">
+                                Home
+                            </a>
+                            <a href="{{ url('/pricing') }}" class="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 {{ url()->current() == url('/pricing') ? 'text-orange-600 bg-orange-50' : '' }}">
+                                Pricing
+                            </a>
+                            <a href="{{ url('/features') }}" class="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 {{ url()->current() == url('/features') ? 'text-orange-600 bg-orange-50' : '' }}">
+                                Features
+                            </a>
+                            <a href="{{ url('/about') }}" class="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 {{ url()->current() == url('/about') ? 'text-orange-600 bg-orange-50' : '' }}">
+                                About Us
+                            </a>
+                            <a href="{{ url('/faq') }}" class="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 {{ url()->current() == url('/faq') ? 'text-orange-600 bg-orange-50' : '' }}">
+                                FAQ
+                            </a>
+                            <a href="{{ url('/contact') }}" class="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 {{ url()->current() == url('/contact') ? 'text-orange-600 bg-orange-50' : '' }}">
+                                Contact Us
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Desktop Login Button -->
+                    <div class="hidden md:block">
+                        @auth
+                            <div class="flex items-center space-x-3">
+                                <a href="{{ route('dashboard.index') }}" class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
+                                    Dashboard
+                                </a>
+                                <form method="POST" action="{{ route('logout') }}" class="inline">
+                                    @csrf
+                                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
+                                        Logout
+                                    </button>
+                                </form>
+                            </div>
+                        @endauth
+                        @guest
+                            <div class="flex items-center space-x-3">
+                                <a href="{{ route('register') }}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
+                                    Sign Up
+                                </a>
+                                <a href="{{ route('login') }}" class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
+                                    Login
+                                </a>
+                            </div>
+                        @endguest
+                    </div>
+
+                    <!-- Mobile menu button -->
+                    <div class="md:hidden">
+                        <button type="button" class="mobile-menu-button bg-white inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-orange-600 hover:bg-orange-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500 transition-colors duration-200" aria-controls="mobile-menu" aria-expanded="false">
+                            <span class="sr-only">Open main menu</span>
+                            <!-- Icon when menu is closed -->
+                            <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                            <!-- Icon when menu is open -->
+                            <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
-            </nav>
-         
-            <!-- Navigation-->
-            <nav class="navbar navbar-expand-lg fkr-navbar" id="main_navbar">
-                <div class="container">
-                    <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ get_logo() }}" alt="logo"/></a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+            </div>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ms-auto d-flex">
-                            <li class="nav-item"><a class="nav-link {{ url()->current() == url('/') ? 'active' : '' }}" href="{{ url('/') }}">{{ _lang('Home') }}</a></li>
-                            <li class="nav-item"><a class="nav-link {{ url()->current() == url('/about') ? 'active' : '' }}" href="{{ url('/about') }}">{{ _lang('About') }}</a></li>
-                            <li class="nav-item"><a class="nav-link {{ url()->current() == url('/features') ? 'active' : '' }}" href="{{ url('/features') }}">{{ _lang('Features') }}</a></li> 
-                            <li class="nav-item"><a class="nav-link {{ url()->current() == url('/pricing') ? 'active' : '' }}" href="{{ url('/pricing') }}">{{ _lang('Pricing') }}</a></li> 
-                            <li class="nav-item"><a class="nav-link {{ url()->current() == url('/blogs') ? 'active' : '' }}" href="{{ url('/blogs') }}">{{ _lang('Blogs') }}</a></li> 
-                            <li class="nav-item">
-                                <a class="nav-link has-submenu" href="#">{{ _lang('Pages') }}</a>
-                                <ul class="submenu">
-                                    @foreach(\App\Models\Page::active()->get() as $d_page)
-                                    <li class="nav-item"><a class="nav-link" href="{{ url('/'.$d_page->slug) }}">{{ $d_page->translation->title }}</a></li>
-                                    @endforeach
-                                </ul>
-                            </li>   
-                            <li class="nav-item"><a class="nav-link {{ url()->current() == url('/faq') ? 'active' : '' }}" href="{{ url('/faq') }}">{{ _lang('FAQ') }}</a></li> 
-                            <li class="nav-item"><a class="nav-link {{ url()->current() == url('/contact') ? 'active' : '' }}" href="{{ url('/contact') }}">{{ _lang('Contact') }}</a></li> 
-                        </ul>
-
-                        <ul class="navbar-nav ms-auto d-flex">
-                            @auth
-                                <li class="nav-item"><a class="nav-link me-2 btn-login py-2 text-nowrap" href="{{ route('dashboard.index') }}"><i class="bi bi-speedometer2 me-2 d-none d-lg-inline"></i>{{ _lang('Dashboard') }}</a></li>
-                                <li class="nav-item"><a class="nav-link me-2 btn-logout py-2 text-nowrap" href="{{ url('/logout') }}"><i class="bi bi-box-arrow-left me-2 d-none d-lg-inline"></i>{{ _lang('Logout') }}</a></li>
-                            @endauth
-
-                            @guest
-                                <li class="nav-item"><a class="nav-link me-2 btn-login py-2 text-nowrap" href="{{ route('login') }}"><i class="bi bi-box-arrow-in-right me-2 d-none d-lg-inline"></i>{{ _lang('Sign In') }}</a></li>
-                                <li class="nav-item"><a class="nav-link btn-register py-2 text-nowrap" href="{{ route('register') }}"><i class="bi bi-person-plus me-2 d-none d-lg-inline"></i>{{ _lang('Sign Up') }}</a></li>                        
-                            @endguest
-                        </ul>
+            <!-- Mobile menu -->
+            <div class="mobile-menu hidden md:hidden" id="mobile-menu">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+                    <a href="{{ url('/') }}" class="text-gray-700 hover:text-orange-600 hover:bg-orange-50 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 {{ url()->current() == url('/') ? 'text-orange-600 bg-orange-50' : '' }}">
+                        Home
+                    </a>
+                    <a href="{{ url('/pricing') }}" class="text-gray-700 hover:text-orange-600 hover:bg-orange-50 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 {{ url()->current() == url('/pricing') ? 'text-orange-600 bg-orange-50' : '' }}">
+                        Pricing
+                    </a>
+                    <a href="{{ url('/features') }}" class="text-gray-700 hover:text-orange-600 hover:bg-orange-50 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 {{ url()->current() == url('/features') ? 'text-orange-600 bg-orange-50' : '' }}">
+                        Features
+                    </a>
+                    <a href="{{ url('/about') }}" class="text-gray-700 hover:text-orange-600 hover:bg-orange-50 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 {{ url()->current() == url('/about') ? 'text-orange-600 bg-orange-50' : '' }}">
+                        About Us
+                    </a>
+                    <a href="{{ url('/faq') }}" class="text-gray-700 hover:text-orange-600 hover:bg-orange-50 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 {{ url()->current() == url('/faq') ? 'text-orange-600 bg-orange-50' : '' }}">
+                        FAQ
+                    </a>
+                    <a href="{{ url('/contact') }}" class="text-gray-700 hover:text-orange-600 hover:bg-orange-50 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 {{ url()->current() == url('/contact') ? 'text-orange-600 bg-orange-50' : '' }}">
+                        Contact Us
+                    </a>
+                    <div class="pt-4 pb-3 border-t border-gray-200">
+                        @auth
+                            <div class="space-y-3">
+                                <a href="{{ route('dashboard.index') }}" class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 block text-center">
+                                    Dashboard
+                                </a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
+                                        Logout
+                                    </button>
+                                </form>
+                            </div>
+                        @endauth
+                        @guest
+                            <div class="space-y-3">
+                                <a href="{{ route('register') }}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 block text-center">
+                                    Sign Up
+                                </a>
+                                <a href="{{ route('login') }}" class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 block text-center">
+                                    Login
+                                </a>
+                            </div>
+                        @endguest
                     </div>
                 </div>
-            </nav>
+            </div>
+        </nav>
 
+        <main class="flex-shrink-0">
             @yield('content')
 
             @php $gdpr_cookie_consent = json_decode(get_trans_option('gdpr_cookie_consent_page')) @endphp
@@ -185,9 +300,59 @@
         <script src="{{ asset('public/website/vendors/slick/slick.min.js') }}"></script>
         <script src="{{ asset('public/backend/plugins/jquery-toast-plugin/jquery.toast.min.js') }}"></script>
         <script src="{{ asset('public/website/js/wow.min.js') }}"></script>
+        <script src="{{ asset('public/backend/plugins/sweet-alert2/js/sweetalert2.min.js') }}"></script>
 
         <!-- Core theme JS-->
         <script src="{{ asset('public/website/js/scripts.js') }}"></script>
         @include('website.custom-js')
+
+        <!-- Mobile Menu JavaScript -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const mobileMenuButton = document.querySelector('.mobile-menu-button');
+                const mobileMenu = document.querySelector('.mobile-menu');
+                const menuIcons = mobileMenuButton.querySelectorAll('svg');
+
+                mobileMenuButton.addEventListener('click', function() {
+                    // Toggle mobile menu visibility
+                    mobileMenu.classList.toggle('hidden');
+                    
+                    // Toggle menu icons
+                    menuIcons.forEach(icon => {
+                        icon.classList.toggle('hidden');
+                        icon.classList.toggle('block');
+                    });
+
+                    // Update aria-expanded attribute
+                    const isExpanded = !mobileMenu.classList.contains('hidden');
+                    mobileMenuButton.setAttribute('aria-expanded', isExpanded);
+                });
+
+                // Close mobile menu when clicking on a link
+                const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+                mobileMenuLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.add('hidden');
+                        menuIcons[0].classList.remove('hidden');
+                        menuIcons[0].classList.add('block');
+                        menuIcons[1].classList.add('hidden');
+                        menuIcons[1].classList.remove('block');
+                        mobileMenuButton.setAttribute('aria-expanded', 'false');
+                    });
+                });
+
+                // Close mobile menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                        mobileMenu.classList.add('hidden');
+                        menuIcons[0].classList.remove('hidden');
+                        menuIcons[0].classList.add('block');
+                        menuIcons[1].classList.add('hidden');
+                        menuIcons[1].classList.remove('block');
+                        mobileMenuButton.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            });
+        </script>
     </body>
 </html>

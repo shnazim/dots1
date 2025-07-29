@@ -59,6 +59,9 @@ use App\Http\Controllers\User\TransactionMethodController;
 use App\Http\Controllers\User\VendorController;
 use App\Http\Controllers\UtilityController;
 use App\Http\Controllers\Website\WebsiteController;
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\BatchDocumentController;
+use App\Http\Controllers\ERPIntegrationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -406,14 +409,85 @@ Route::group(['middleware' => ['install']], function () use ($ev) {
     Route::get('/features', [WebsiteController::class, 'features']);
     Route::get('/pricing', [WebsiteController::class, 'pricing']);
     Route::get('/faq', [WebsiteController::class, 'faq']);
-    Route::get('/blogs/{slug?}', [WebsiteController::class, 'blogs']);
     Route::get('/contact', [WebsiteController::class, 'contact']);
     Route::post('/send_message', 'Website\WebsiteController@send_message');
-    Route::post('/post_comment', 'Website\WebsiteController@post_comment');
-    Route::post('/email_subscription', 'Website\WebsiteController@email_subscription');
+Route::post('/email_subscription', 'Website\WebsiteController@email_subscription');
+Route::post('/quotation/store', 'Website\WebsiteController@storeQuotation')->name('website.quotation.store');
+
+    // Document Management Routes
+    Route::prefix('documents')->name('documents.')->group(function () {
+        // Single document creation
+        Route::get('/invoice/create', [DocumentController::class, 'createInvoice'])->name('invoice.create');
+        Route::get('/quotation/create', [DocumentController::class, 'createQuotation'])->name('quotation.create');
+        Route::get('/estimate/create', [DocumentController::class, 'createEstimate'])->name('estimate.create');
+        Route::get('/po/create', [DocumentController::class, 'createPO'])->name('po.create');
+        
+        // Batch document generation
+        Route::get('/invoice/batch', [DocumentController::class, 'batchInvoices'])->name('invoice.batch');
+        Route::get('/quotation/batch', [DocumentController::class, 'batchQuotations'])->name('quotation.batch');
+        Route::get('/estimate/batch', [DocumentController::class, 'batchEstimates'])->name('estimate.batch');
+        Route::get('/po/batch', [DocumentController::class, 'batchPOs'])->name('po.batch');
+        
+        // Document actions
+        Route::post('/invoice/store', [DocumentController::class, 'storeInvoice'])->name('invoice.store');
+        Route::post('/quotation/store', [DocumentController::class, 'storeQuotation'])->name('quotation.store');
+        Route::post('/estimate/store', [DocumentController::class, 'storeEstimate'])->name('estimate.store');
+        Route::post('/po/store', [DocumentController::class, 'storePO'])->name('po.store');
+        Route::post('/batch-upload/{type}', [DocumentController::class, 'processBatchUpload'])->name('batch.upload');
+        Route::post('/batch-generate/{type}', [DocumentController::class, 'generateBatchDocuments'])->name('batch.generate');
+        Route::get('/template/{type}', [DocumentController::class, 'downloadTemplate'])->name('template.download');
+        Route::get('/download/{id}', [DocumentController::class, 'downloadDocument'])->name('download');
+        
+        // Advanced Batch Document Management
+        Route::prefix('batch')->name('batch.')->group(function () {
+            Route::get('/dashboard', [BatchDocumentController::class, 'dashboard'])->name('dashboard');
+            Route::get('/job/{id}', [BatchDocumentController::class, 'showJob'])->name('job.show');
+            Route::post('/job/create', [BatchDocumentController::class, 'createJob'])->name('job.create');
+            Route::post('/job/{id}/upload', [BatchDocumentController::class, 'uploadData'])->name('job.upload');
+            Route::post('/job/{id}/generate', [BatchDocumentController::class, 'generateDocuments'])->name('job.generate');
+            Route::get('/job/{id}/download', [BatchDocumentController::class, 'downloadResults'])->name('job.download');
+            Route::delete('/job/{id}', [BatchDocumentController::class, 'deleteJob'])->name('job.delete');
+            Route::get('/job/{id}/progress', [BatchDocumentController::class, 'getProgress'])->name('job.progress');
+        });
+    });
+
+    // ERP Integration Routes
+    Route::prefix('integrations')->name('integrations.')->middleware('auth')->group(function () {
+        Route::get('/', [ERPIntegrationController::class, 'index'])->name('index');
+        Route::get('/instructions', [ERPIntegrationController::class, 'instructions'])->name('instructions');
+        Route::get('/status', [ERPIntegrationController::class, 'status'])->name('status');
+        
+        // QuickBooks
+        Route::get('/quickbooks/setup', [ERPIntegrationController::class, 'quickbooksSetup'])->name('quickbooks.setup');
+        Route::post('/quickbooks/connect', [ERPIntegrationController::class, 'connectQuickbooks'])->name('quickbooks.connect');
+        Route::get('/quickbooks/callback', [ERPIntegrationController::class, 'quickbooksCallback'])->name('quickbooks.callback');
+        Route::get('/quickbooks/customers', [ERPIntegrationController::class, 'fetchQuickbooksCustomers'])->name('quickbooks.customers');
+        Route::get('/quickbooks/vendors', [ERPIntegrationController::class, 'fetchQuickbooksVendors'])->name('quickbooks.vendors');
+        Route::get('/quickbooks/items', [ERPIntegrationController::class, 'fetchQuickbooksItems'])->name('quickbooks.items');
+        Route::post('/quickbooks/invoice', [ERPIntegrationController::class, 'postInvoiceToQuickbooks'])->name('quickbooks.invoice');
+        Route::get('/quickbooks/fetch/{type}', [ERPIntegrationController::class, 'fetchQuickbooksData'])->name('quickbooks.fetch');
+        
+        // SAP Business One
+        Route::get('/sap/setup', [ERPIntegrationController::class, 'sapSetup'])->name('sap.setup');
+        Route::post('/sap/connect', [ERPIntegrationController::class, 'connectSAP'])->name('sap.connect');
+        
+        // Xero
+        Route::get('/xero/setup', [ERPIntegrationController::class, 'xeroSetup'])->name('xero.setup');
+        Route::post('/xero/connect', [ERPIntegrationController::class, 'connectXero'])->name('xero.connect');
+        Route::get('/xero/callback', [ERPIntegrationController::class, 'xeroCallback'])->name('xero.callback');
+        
+        // Microsoft Dynamics
+        Route::get('/dynamics/setup', [ERPIntegrationController::class, 'dynamicsSetup'])->name('dynamics.setup');
+        Route::post('/dynamics/connect', [ERPIntegrationController::class, 'connectDynamics'])->name('dynamics.connect');
+        
+        // Oracle NetSuite
+        Route::get('/netsuite/setup', [ERPIntegrationController::class, 'netsuiteSetup'])->name('netsuite.setup');
+        Route::post('/netsuite/connect', [ERPIntegrationController::class, 'connectNetSuite'])->name('netsuite.connect');
+        Route::get('/netsuite/callback', [ERPIntegrationController::class, 'netsuiteCallback'])->name('netsuite.callback');
+    });
 
     if (env('APP_INSTALLED', true)) {
-        Route::get('/{slug?}', [WebsiteController::class, 'index']);
+        Route::get('/{slug?}', [WebsiteController::class, 'index'])->name('home');
     } else {
         Route::get('/', function () {
             echo "Installation";
