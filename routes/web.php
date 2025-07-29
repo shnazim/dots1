@@ -62,6 +62,8 @@ use App\Http\Controllers\Website\WebsiteController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\BatchDocumentController;
 use App\Http\Controllers\ERPIntegrationController;
+use App\Http\Controllers\User\BarcodeController;
+use App\Http\Controllers\User\EnterpriseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -449,6 +451,33 @@ Route::post('/quotation/store', 'Website\WebsiteController@storeQuotation')->nam
             Route::delete('/job/{id}', [BatchDocumentController::class, 'deleteJob'])->name('job.delete');
             Route::get('/job/{id}/progress', [BatchDocumentController::class, 'getProgress'])->name('job.progress');
         });
+    });
+
+    // Enterprise Features Routes
+    Route::prefix('enterprise')->name('enterprise.')->middleware('auth')->group(function () {
+        // Barcode & QR Code Generation
+        Route::prefix('barcode')->name('barcode.')->group(function () {
+            Route::post('/generate', [BarcodeController::class, 'generateBarcode'])->name('generate');
+            Route::post('/qr/generate', [BarcodeController::class, 'generateQR'])->name('qr.generate');
+            Route::get('/scanner', [BarcodeController::class, 'barcodeScanner'])->name('scanner');
+            Route::post('/download', [BarcodeController::class, 'downloadBarcode'])->name('download');
+            Route::post('/qr/download', [BarcodeController::class, 'downloadQR'])->name('qr.download');
+            Route::post('/labels/print', [BarcodeController::class, 'printLabels'])->name('labels.print');
+        });
+
+        // Inventory Management
+        Route::get('/inventory', [EnterpriseController::class, 'inventoryManagement'])->name('inventory.management');
+        
+        // Warehouse Management
+        Route::get('/warehouse', [EnterpriseController::class, 'warehouseManagement'])->name('warehouse.management');
+        
+        // Shipping & Tracking
+        Route::get('/shipping', [EnterpriseController::class, 'shippingTracking'])->name('shipping.tracking');
+        
+        // Reports & Analytics
+        Route::get('/analytics', [EnterpriseController::class, 'reportsAnalytics'])->name('reports.analytics');
+        Route::post('/reports/generate', [EnterpriseController::class, 'generateReport'])->name('reports.generate');
+        Route::get('/reports/download', [EnterpriseController::class, 'downloadReport'])->name('reports.download');
     });
 
     // ERP Integration Routes

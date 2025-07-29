@@ -152,6 +152,102 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Barcode & QR Generation - Enterprise -->
+            <div class="bg-gradient-to-br from-orange-500 via-orange-600 to-red-600 rounded-xl shadow-2xl overflow-hidden hover:shadow-3xl transition-all duration-300" style="box-shadow: 2px 0 32px rgba(249, 115, 22, 0.2);">
+                <div class="bg-gradient-to-r from-amber-500 to-orange-500 p-4">
+                    <h3 class="text-lg font-bold text-white flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M2,6H4V18H2V6M6,6H8V18H6V6M10,6H12V18H10V6M14,6H16V18H14V6M18,6H20V18H18V6M22,6H24V18H22V6Z"/>
+                        </svg>
+                        Barcode & QR Tools
+                    </h3>
+                </div>
+                <div class="p-4">
+                    <div class="space-y-3">
+                        <a href="{{ route('enterprise.barcode.generate') }}" class="group flex items-center p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
+                            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M2,6H4V18H2V6M6,6H8V18H6V6M10,6H12V18H10V6M14,6H16V18H14V6M18,6H20V18H18V6M22,6H24V18H22V6Z"/>
+                                </svg>
+                            </div>
+                            <span class="font-semibold text-white text-sm">Generate Barcodes</span>
+                        </a>
+                        <a href="{{ route('enterprise.barcode.qr.generate') }}" class="group flex items-center p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
+                            <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-teal-600 rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M3,11H5V13H3V11M7,11H9V13H7V11M11,11H13V13H11V11M15,11H17V13H15V11M19,11H21V13H19V11M3,15H5V17H3V15M7,15H9V17H7V15M11,15H13V17H11V15M15,15H17V17H15V15M19,15H21V17H19V15M3,7H5V9H3V7M7,7H9V9H7V7M11,7H13V9H11V7M15,7H17V9H15V7M19,7H21V9H19V7Z"/>
+                                </svg>
+                            </div>
+                            <span class="font-semibold text-white text-sm">Generate QR Codes</span>
+                        </a>
+                        <a href="{{ route('enterprise.barcode.scanner') }}" class="group flex items-center p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
+                            <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M4,6H6V18H4V6M7,6H9V18H7V6M10,6H12V18H10V6M13,6H15V18H13V6M16,6H18V18H16V6M19,6H21V18H19V6M22,6H24V18H22V6Z"/>
+                                </svg>
+                            </div>
+                            <span class="font-semibold text-white text-sm">Barcode Scanner</span>
+                        </a>
+                        <a href="{{ route('enterprise.barcode.labels.print') }}" class="group flex items-center p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
+                            <div class="w-10 h-10 bg-gradient-to-br from-pink-500 to-red-600 rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19,8H5A3,3 0 0,0 2,11V17H6V21H18V17H22V11A3,3 0 0,0 19,8M16,19H8V17H16V19M20,15H4V11A1,1 0 0,1 5,10H19A1,1 0 0,1 20,11V15Z"/>
+                                </svg>
+                            </div>
+                            <span class="font-semibold text-white text-sm">Print Labels</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Enterprise Features -->
+            <div class="bg-gradient-to-br from-orange-500 via-orange-600 to-red-600 rounded-xl shadow-2xl overflow-hidden hover:shadow-3xl transition-all duration-300" style="box-shadow: 2px 0 32px rgba(249, 115, 22, 0.2);">
+                <div class="bg-gradient-to-r from-amber-500 to-orange-500 p-4">
+                    <h3 class="text-lg font-bold text-white flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
+                        </svg>
+                        Enterprise Features
+                    </h3>
+                </div>
+                <div class="p-4">
+                    <div class="space-y-3">
+                        <a href="{{ route('enterprise.inventory.management') }}" class="group flex items-center p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
+                            <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20,2H4A2,2 0 0,0 2,4V22L6,18H20A2,2 0 0,0 22,16V4A2,2 0 0,0 20,2M6,9V7H4V9H6M10,9V7H8V9H10M14,9V7H12V9H14M18,9V7H16V9H18M6,11V13H4V11H6M10,11V13H8V11H10M14,11V13H12V11H14M18,11V13H16V11H18Z"/>
+                                </svg>
+                            </div>
+                            <span class="font-semibold text-white text-sm">Inventory Management</span>
+                        </a>
+                        <a href="{{ route('enterprise.warehouse.management') }}" class="group flex items-center p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
+                            <div class="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
+                                </svg>
+                            </div>
+                            <span class="font-semibold text-white text-sm">Warehouse Management</span>
+                        </a>
+                        <a href="{{ route('enterprise.shipping.tracking') }}" class="group flex items-center p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
+                            <div class="w-10 h-10 bg-gradient-to-br from-violet-500 to-purple-600 rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
+                                </svg>
+                            </div>
+                            <span class="font-semibold text-white text-sm">Shipping & Tracking</span>
+                        </a>
+                        <a href="{{ route('enterprise.reports.analytics') }}" class="group flex items-center p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
+                            <div class="w-10 h-10 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M22,21H2V3H4V19H6V17H10V19H12V16H16V19H18V17H22V21M16,8H18V15H16V8M12,10H14V15H12V10M8,5H10V15H8V5M4,8H6V15H4V8Z"/>
+                                </svg>
+                            </div>
+                            <span class="font-semibold text-white text-sm">Reports & Analytics</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Quotation Form Section - 3/4 width -->
